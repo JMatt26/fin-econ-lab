@@ -100,3 +100,21 @@ def test_price_elasticity_demand_logarithmic_central_difference():
     got = price_elasticity_demand(demand, price, h=1e-5)
     expected = price_elasticity_demand(demand, price, derivative_function=derivative)
     assert got == pytest.approx(expected)
+
+def test_price_elasticity_demand_constant():
+    demand = lambda p: 1000*p**(-1.5)
+    price = 5.0
+    derivative = lambda p: -1500*p**(-2.5)
+    got = price_elasticity_demand(demand, price, derivative_function=derivative)
+    new_price = 10.0
+    got_new = price_elasticity_demand(demand, new_price, derivative_function=derivative)
+    assert got == pytest.approx(got_new)
+
+def test_price_elasticity_demand_constant_central_difference():
+    demand = lambda p: 1000*p**(-1.5)
+    price = 5.0
+    derivative = lambda p: -1500*p**(-2.5)
+    got = price_elasticity_demand(demand, price, h=1e-5)
+    new_price = 10.0
+    got_new = price_elasticity_demand(demand, new_price, h=1e-5)
+    assert got == pytest.approx(got_new)
