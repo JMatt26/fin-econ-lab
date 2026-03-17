@@ -96,3 +96,55 @@ def price_elasticity_demand(
     elasticity = -derivative * price / quantity
     return elasticity
 
+
+def price_elasticity_supply_linear(
+    supply_function: CurveFunction,
+    price: Number,
+    slope: Number,
+) -> Number:
+    """
+    Compute the price elasticity of supply for a linear supply function.
+    """
+    _validate_finite("price", price)
+    _validate_finite("slope", slope)
+
+    quantity = supply_function(price)
+    _validate_finite("quantity", quantity)
+
+    if quantity == 0:
+        raise ZeroDivisionError("Elasticity is undefined for zero quantity.")
+
+    elasticity = slope * price / quantity
+    return elasticity
+
+
+def price_elasticity_supply(
+    supply_function: CurveFunction,
+    price: Number,
+    derivative_function: Optional[CurveFunction] = None,
+    h: Number = 1e-5,
+) -> Number:
+    """
+    Compute the price elasticity of supply
+    """
+    _validate_finite("price", price)
+    _validate_finite("h", h)
+
+    if h <= 0:
+        raise EconValueError(f"Step size h must be positive, got {h}")
+
+    quantity = supply_function(price)
+    _validate_finite("quantity", quantity)
+
+    if quantity == 0:
+        raise ZeroDivisionError("Elasticity is undefined for zero quantity.")
+
+    if derivative_function is not None:
+        derivative = derivative_function(price)
+        _validate_finite("derivative", derivative)
+    else:
+        derivative = _central_difference(supply_function, price, h)
+        _validate_finite("derivative", derivative)
+
+    elasticity = derivative * price / quantity
+    return elasticity
