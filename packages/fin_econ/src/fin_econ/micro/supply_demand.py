@@ -148,3 +148,9 @@ def price_elasticity_supply(
 
     elasticity = derivative * price / quantity
     return elasticity
+
+def arc_elasticity(deltaQ, deltaP, averageQ, averageP):
+    """
+    Compute the arc elasticity of demand or supply
+    """
+    return -deltaQ / deltaP * averageP / averageQ
