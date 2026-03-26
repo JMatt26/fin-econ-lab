@@ -154,3 +154,21 @@ def arc_elasticity(deltaQ, deltaP, averageQ, averageP):
     Compute the arc elasticity of demand or supply
     """
     return -deltaQ / deltaP * averageP / averageQ
+
+def total_consumer_expenditure(price, quantity):
+    """
+    Compute the total consumer expenditure
+    """
+    return price * quantity
+
+def average_product(output, input):
+    """
+    Compute the average product
+    """
+    return output / input
+
+def marginal_product(change_in_output, change_in_input):
+    """
+    Compute the marginal product
+    """
+    return change_in_output / change_in_input
